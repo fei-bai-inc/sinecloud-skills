@@ -3,29 +3,29 @@
 
 Authorities: [`https://sinecloud.dev/api/openapi/box.json`](https://sinecloud.dev/api/openapi/box.json) and `sinecloud api list --product box --json`.
 Scopes in use: `boxRun`, `fileRead`, `fileWrite`.
-The CLI inserts the selected workspace and resource IDs into the path; raw HTTP uses the published path below.
+Either call form works. The convenience command fills path values with named flags; `api call` takes `--param name=value`, and raw HTTP uses the published path. The CLI inserts the selected workspace and resource IDs.
 
-| Area | Operation | Scope | CLI | HTTP |
-| --- | --- | --- | --- | --- |
-| root | `boxListBoxes` | `fileRead` | `sinecloud box list` | `GET /api/box/v1` |
-| root | `boxListBackups` | `fileRead` | `sinecloud box backups list` | `GET /api/box/v1/{boxId}/backups` |
-| root | `boxCreateBackup` | `boxRun`, `fileRead` | `sinecloud box backups create` | `POST /api/box/v1/{boxId}/backups` |
-| root | `boxGetBackup` | `fileRead` | `sinecloud box backups get` | `GET /api/box/v1/{boxId}/backups/{backupId}` |
-| root | `boxExportBackup` | `fileRead` | `sinecloud box backups export` | `GET /api/box/v1/{boxId}/backups/{backupId}/export` |
-| root | `boxReadBackupFile` | `fileRead` | `sinecloud box backups file` | `GET /api/box/v1/{boxId}/backups/{backupId}/file` |
-| root | `boxListBackupFiles` | `fileRead` | `sinecloud box backups files` | `GET /api/box/v1/{boxId}/backups/{backupId}/files` |
-| root | `boxListExecutions` | `fileRead` | `sinecloud box executions list` | `GET /api/box/v1/{boxId}/executions` |
-| root | `boxSubmitExecution` | `boxRun` | `sinecloud box executions create` | `POST /api/box/v1/{boxId}/executions` |
-| root | `boxGetExecution` | `boxRun` | `sinecloud box executions get` | `GET /api/box/v1/{boxId}/executions/{executionId}` |
-| root | `boxCancelExecution` | `boxRun` | `sinecloud box executions cancel` | `POST /api/box/v1/{boxId}/executions/{executionId}/cancel` |
-| root | `boxGetPrice` | `fileRead` | `sinecloud box price list` | `GET /api/box/v1/{boxId}/price` |
-| root | `boxGetRestore` | `fileRead` | `sinecloud box restores get` | `GET /api/box/v1/{boxId}/restores/{restoreId}` |
-| root | `boxGetRuntime` | `fileRead` | `sinecloud box runtime list` | `GET /api/box/v1/{boxId}/runtime` |
-| root | `boxChangeRuntime` | `boxRun` | `sinecloud box runtime create` | `POST /api/box/v1/{boxId}/runtime` |
-| root | `boxDeleteWorkspaceFile` | `fileWrite` | `sinecloud box workspace file delete` | `DELETE /api/box/v1/{boxId}/workspace/file` |
-| root | `boxReadWorkspaceFile` | `fileRead` | `sinecloud box workspace file list` | `GET /api/box/v1/{boxId}/workspace/file` |
-| root | `boxWriteWorkspaceFile` | `fileWrite` | `sinecloud box workspace file replace` | `PUT /api/box/v1/{boxId}/workspace/file` |
-| root | `boxListWorkspaceFiles` | `fileRead` | `sinecloud box workspace files list` | `GET /api/box/v1/{boxId}/workspace/files` |
-| root | `boxGetWorkspaceStats` | `fileRead` | `sinecloud box workspace stats list` | `GET /api/box/v1/{boxId}/workspace/stats` |
+| Area | Operation | Scope | Direct call | Convenience command | HTTP |
+| --- | --- | --- | --- | --- | --- |
+| root | `boxListBoxes` | `fileRead` | `sinecloud api call boxListBoxes` | `sinecloud box list` | `GET /api/box/v1` |
+| root | `boxListBackups` | `fileRead` | `sinecloud api call boxListBackups` | `sinecloud box backups list` | `GET /api/box/v1/{boxId}/backups` |
+| root | `boxCreateBackup` | `boxRun`, `fileRead` | `sinecloud api call boxCreateBackup` | `sinecloud box backups create` | `POST /api/box/v1/{boxId}/backups` |
+| root | `boxGetBackup` | `fileRead` | `sinecloud api call boxGetBackup` | `sinecloud box backups get` | `GET /api/box/v1/{boxId}/backups/{backupId}` |
+| root | `boxExportBackup` | `fileRead` | `sinecloud api call boxExportBackup` | `sinecloud box backups export` | `GET /api/box/v1/{boxId}/backups/{backupId}/export` |
+| root | `boxReadBackupFile` | `fileRead` | `sinecloud api call boxReadBackupFile` | `sinecloud box backups file` | `GET /api/box/v1/{boxId}/backups/{backupId}/file` |
+| root | `boxListBackupFiles` | `fileRead` | `sinecloud api call boxListBackupFiles` | `sinecloud box backups files` | `GET /api/box/v1/{boxId}/backups/{backupId}/files` |
+| root | `boxListExecutions` | `fileRead` | `sinecloud api call boxListExecutions` | `sinecloud box executions list` | `GET /api/box/v1/{boxId}/executions` |
+| root | `boxSubmitExecution` | `boxRun` | `sinecloud api call boxSubmitExecution` | `sinecloud box executions create` | `POST /api/box/v1/{boxId}/executions` |
+| root | `boxGetExecution` | `boxRun` | `sinecloud api call boxGetExecution` | `sinecloud box executions get` | `GET /api/box/v1/{boxId}/executions/{executionId}` |
+| root | `boxCancelExecution` | `boxRun` | `sinecloud api call boxCancelExecution` | `sinecloud box executions cancel` | `POST /api/box/v1/{boxId}/executions/{executionId}/cancel` |
+| root | `boxGetPrice` | `fileRead` | `sinecloud api call boxGetPrice` | `sinecloud box price list` | `GET /api/box/v1/{boxId}/price` |
+| root | `boxGetRestore` | `fileRead` | `sinecloud api call boxGetRestore` | `sinecloud box restores get` | `GET /api/box/v1/{boxId}/restores/{restoreId}` |
+| root | `boxGetRuntime` | `fileRead` | `sinecloud api call boxGetRuntime` | `sinecloud box runtime list` | `GET /api/box/v1/{boxId}/runtime` |
+| root | `boxChangeRuntime` | `boxRun` | `sinecloud api call boxChangeRuntime` | `sinecloud box runtime create` | `POST /api/box/v1/{boxId}/runtime` |
+| root | `boxDeleteWorkspaceFile` | `fileWrite` | `sinecloud api call boxDeleteWorkspaceFile` | `sinecloud box workspace file delete` | `DELETE /api/box/v1/{boxId}/workspace/file` |
+| root | `boxReadWorkspaceFile` | `fileRead` | `sinecloud api call boxReadWorkspaceFile` | `sinecloud box workspace file list` | `GET /api/box/v1/{boxId}/workspace/file` |
+| root | `boxWriteWorkspaceFile` | `fileWrite` | `sinecloud api call boxWriteWorkspaceFile` | `sinecloud box workspace file replace` | `PUT /api/box/v1/{boxId}/workspace/file` |
+| root | `boxListWorkspaceFiles` | `fileRead` | `sinecloud api call boxListWorkspaceFiles` | `sinecloud box workspace files list` | `GET /api/box/v1/{boxId}/workspace/files` |
+| root | `boxGetWorkspaceStats` | `fileRead` | `sinecloud api call boxGetWorkspaceStats` | `sinecloud box workspace stats list` | `GET /api/box/v1/{boxId}/workspace/stats` |
 
 Total: 20 operations.

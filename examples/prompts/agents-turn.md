@@ -8,7 +8,7 @@
 
 **Acceptance**
 
-1. Lists real Agents instances (`sinecloud agents list`) and reuses an existing Agent instead of inventing one.
+1. Lists real Agents instances (`api call agents_listInstances`) and reuses an existing Agent instead of inventing one.
 2. Reads the model catalog and confirms the route supports streaming (and tools, if the Agent uses tools).
 3. Creates a session with `environment.type=none` unless the task needs a hosted environment.
 4. Submits exactly one `agent.session.input.message` event with the README content or an instruction to read it.

@@ -41,7 +41,8 @@ Requirements: Node.js 24.19+ for `@sinecloud/cli`, an organization API key with 
 ## How these Skills are built
 
 - **Capability, not transport.** `sinecloud-mcp`, `sinecloud-sdk`, `sinecloud-cli` and `sinecloud-api` are deliberately absent; their content lives in every Skill's `references/access.md`.
-- **Contract first.** An Agent discovers real operations with `sinecloud api list`, reads the published OpenAPI in `references/operations.md`, and never invents an ID, field, scope or status.
+- **Contract first.** An Agent discovers real operations with `sinecloud api list`, calls one with `sinecloud api call <operationId>`, reads the published OpenAPI in `references/operations.md`, and never invents an ID, field, scope or status.
+- **One command surface.** Instructions use only meta commands (`auth`, `api list`, `api call <operationId>`, `openapi get`, `doctor`). Per-operation command names exist exactly once, in the generated table; the validator fails a Skill that restates one.
 - **Costs stated up front.** Every Skill says what is reserved, what is settled, and which action needs a quote or a budget.
 - **Recovery before retry.** Unknown outcomes keep their request identity; the Skills say which record to re-read instead of submitting new work.
 - **Bounded depth.** `SKILL.md` stays a decision tree; operational tables are generated into `references/`.
@@ -65,7 +66,7 @@ npm run generate    # regenerate references/operations.md from the CLI manifest 
 npm run validate    # frontmatter, shared copies, generated tables, commands, paths, links, secrets
 ```
 
-`npm run validate` runs in CI on every pull request. Product changes that add, remove or re-scope an operation must regenerate `operations.md` in the same pull request.
+`npm run validate` runs in CI on every pull request. It also rejects an operation-level command inside `skills/**` instructions, so command names cannot drift back into prose. Product changes that add, remove or re-scope an operation must regenerate `operations.md` in the same pull request.
 
 Found wrong or outdated guidance? Open an issue with the template in any Skill's `references/feedback.md`. Product support and account questions belong to support@sinecloud.dev, not to this repository.
 

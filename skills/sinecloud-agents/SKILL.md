@@ -20,8 +20,9 @@ The contract is `https://sinecloud.dev/api/openapi/agents.json`; the generated o
 4. **Balance** — model calls consume organization credits. Read [`references/costs.md`](references/costs.md).
 
 ```bash
-sinecloud agents list --json | jq '.data[] | {id, status}'
-sinecloud agents models list --instance-id "$INSTANCE_ID" --json
+sinecloud api list --product agents --json
+sinecloud api call agents_listInstances --json
+sinecloud api call agents_get_sine_v1_models --instance "$INSTANCE_ID" --json
 ```
 
 Read the field names the catalog actually returns; do not assume a `streaming` or `tools` property. Pick a model that supports streaming text, and one with confirmed tool support when the Agent uses tools. `sinecloud api list --product agents --json` is the authoritative command and parameter surface when a flag is unclear.
@@ -30,13 +31,13 @@ Read the field names the catalog actually returns; do not assume a `streaming` o
 
 ```bash
 # 1. Reuse an Agent, or create one whose configuration names a real model route.
-sinecloud agents get --instance-id "$INSTANCE_ID" --agent-id "$AGENT_ID" --json
+sinecloud api call agents_get_v1_agents_agent_id --instance "$INSTANCE_ID" --param agent_id="$AGENT_ID" --json
 
 # 2. Open a session for that Agent. environment.type=none is enough for text-only work.
-sinecloud agents sessions create --instance-id "$INSTANCE_ID" --body @session.json --json
+sinecloud api call agents_post_v1_agents_sessions --instance "$INSTANCE_ID" --body @session.json --json
 
 # 3. Submit one user message as an input event.
-sinecloud agents sessions events post --instance-id "$INSTANCE_ID" --session-id "$SESSION_ID" --body @input.json --json
+sinecloud api call agents_post_v1_agents_sessions_session_id_events --instance "$INSTANCE_ID" --param session_id="$SESSION_ID" --body @input.json --json
 ```
 
 `session.json` needs the Agent reference (`agent_id` or an inline `agent` override) and an environment such as `{"type":"none"}`. `input.json` follows the published input-event contract:
@@ -53,11 +54,10 @@ sinecloud agents sessions events post --instance-id "$INSTANCE_ID" --session-id 
 ## Read the result
 
 ```bash
-sinecloud agents sessions events --instance-id "$INSTANCE_ID" --session-id "$SESSION_ID"   # live only, no replay
-sinecloud agents sessions items  --instance-id "$INSTANCE_ID" --session-id "$SESSION_ID" --json
-sinecloud agents sessions turns  --instance-id "$INSTANCE_ID" --session-id "$SESSION_ID" --json
-sinecloud agents sessions turns get --instance-id "$INSTANCE_ID" --session-id "$SESSION_ID" --turn-id "$TURN_ID" --json
+sinecloud api call agents_get_v1_agents_sessions_session_id_items --instance "$INSTANCE_ID" --param session_id="$SESSION_ID" --json
 ```
+
+Turns and a single turn follow the same shape; their operation IDs are listed in [`references/operations.md`](references/operations.md).
 
 The event subscription replays nothing: a reconnect starts after it reconnects. The durable record is items and turns. A completed turn is the only evidence of a normal answer; an idle session, a closed tab or a dropped stream proves nothing about the last execution.
 
@@ -68,8 +68,8 @@ The event subscription replays nothing: a reconnect starts after it reconnects. 
 - The per-session usage record is authoritative for that session, and it is not a total for the organization:
 
 ```bash
-sinecloud agents sessions usage --instance-id "$INSTANCE_ID" --session-id "$SESSION_ID" --json
-sinecloud agents sessions attempts --instance-id "$INSTANCE_ID" --session-id "$SESSION_ID" --json
+sinecloud api call agents_get_sine_v1_sessions_session_id_usage --instance "$INSTANCE_ID" --param session_id="$SESSION_ID" --json
+sinecloud api call agents_get_sine_v1_sessions_session_id_attempts --instance "$INSTANCE_ID" --param session_id="$SESSION_ID" --json
 ```
 
 - `attempts` includes interrupted model attempts. Usage can exist for a session that was later deleted.
@@ -92,7 +92,7 @@ The session shows a completed turn whose items contain the answer, the usage rec
 
 ## References
 
-- [`references/operations.md`](references/operations.md) — operations, scopes, CLI commands, HTTP paths
+- [`references/operations.md`](references/operations.md) — operations, scopes, direct calls, convenience commands, HTTP paths
 - [`references/access.md`](references/access.md) — CLI/SDK/MCP/HTTP setup and credential rules
 - [`references/costs.md`](references/costs.md) — reservations, token billing, stop conditions
 - [`references/feedback.md`](references/feedback.md) — reporting wrong guidance

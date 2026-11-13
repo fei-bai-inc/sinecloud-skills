@@ -3,35 +3,35 @@
 
 Authorities: [`https://sinecloud.dev/api/openapi/gateway.json`](https://sinecloud.dev/api/openapi/gateway.json) and `sinecloud api list --product gateway --json`.
 Scopes in use: `modelInvoke`, `modelRead`.
-The CLI inserts the selected workspace and resource IDs into the path; raw HTTP uses the published path below.
+Either call form works. The convenience command fills path values with named flags; `api call` takes `--param name=value`, and raw HTTP uses the published path. The CLI inserts the selected workspace and resource IDs.
 
-| Area | Operation | Scope | CLI | HTTP |
-| --- | --- | --- | --- | --- |
-| audio | `createSpeech` | `modelInvoke` | `sinecloud gateway audio speech` | `POST /api/gateway/v1/audio/speech` |
-| audio | `createTranscription` | `modelInvoke` | `sinecloud gateway audio transcriptions` | `POST /api/gateway/v1/audio/transcriptions` |
-| audio | `createTranslation` | `modelInvoke` | `sinecloud gateway audio translations` | `POST /api/gateway/v1/audio/translations` |
-| chat | `createChatCompletion` | `modelInvoke` | `sinecloud gateway chat completions` | `POST /api/gateway/v1/chat/completions` |
-| edits | `image.edit` | `modelInvoke` | `sinecloud gateway edits images` | `POST /api/gateway/v1/edits/images` |
-| embeddings | `createEmbedding` | `modelInvoke` | `sinecloud gateway embeddings create` | `POST /api/gateway/v1/embeddings` |
-| generations | `animation3d.generate` | `modelInvoke` | `sinecloud gateway generations animations3d` | `POST /api/gateway/v1/generations/animations3d` |
-| generations | `audio.synthesize` | `modelInvoke` | `sinecloud gateway generations audio` | `POST /api/gateway/v1/generations/audio` |
-| generations | `document.generate` | `modelInvoke` | `sinecloud gateway generations documents` | `POST /api/gateway/v1/generations/documents` |
-| generations | `image.generate` | `modelInvoke` | `sinecloud gateway generations images` | `POST /api/gateway/v1/generations/images` |
-| generations | `model3d.generate` | `modelInvoke` | `sinecloud gateway generations models3d` | `POST /api/gateway/v1/generations/models3d` |
-| generations | `music.generate` | `modelInvoke` | `sinecloud gateway generations music` | `POST /api/gateway/v1/generations/music` |
-| generations | `sound.generate` | `modelInvoke` | `sinecloud gateway generations sounds` | `POST /api/gateway/v1/generations/sounds` |
-| generations | `splat.generate` | `modelInvoke` | `sinecloud gateway generations splats` | `POST /api/gateway/v1/generations/splats` |
-| generations | `video.generate` | `modelInvoke` | `sinecloud gateway generations videos` | `POST /api/gateway/v1/generations/videos` |
-| images | `editImage` | `modelInvoke` | `sinecloud gateway images edits` | `POST /api/gateway/v1/images/edits` |
-| images | `createImage` | `modelInvoke` | `sinecloud gateway images generations` | `POST /api/gateway/v1/images/generations` |
-| messages | `createMessage` | `modelInvoke` | `sinecloud gateway messages create` | `POST /api/gateway/v1/messages` |
-| models | `listModels` | `modelRead` | `sinecloud gateway models list` | `GET /api/gateway/v1/models` |
-| models3d | `model3d.remesh` | `modelInvoke` | `sinecloud gateway models3d remesh` | `POST /api/gateway/v1/models3d/remesh` |
-| models3d | `model3d.retexture` | `modelInvoke` | `sinecloud gateway models3d retexture` | `POST /api/gateway/v1/models3d/retexture` |
-| models3d | `model3d.rig` | `modelInvoke` | `sinecloud gateway models3d rig` | `POST /api/gateway/v1/models3d/rig` |
-| responses | `createModelResponse` | `modelInvoke` | `sinecloud gateway responses create` | `POST /api/gateway/v1/responses` |
-| tasks | `tasks.list` | `modelInvoke` | `sinecloud gateway tasks list` | `GET /api/gateway/v1/tasks` |
-| tasks | `tasks.get` | `modelInvoke` | `sinecloud gateway tasks get` | `GET /api/gateway/v1/tasks/{id}` |
-| tasks | `tasks.cancel` | `modelInvoke` | `sinecloud gateway tasks cancel` | `POST /api/gateway/v1/tasks/{id}/cancel` |
+| Area | Operation | Scope | Direct call | Convenience command | HTTP |
+| --- | --- | --- | --- | --- | --- |
+| audio | `createSpeech` | `modelInvoke` | `sinecloud api call createSpeech` | `sinecloud gateway audio speech` | `POST /api/gateway/v1/audio/speech` |
+| audio | `createTranscription` | `modelInvoke` | `sinecloud api call createTranscription` | `sinecloud gateway audio transcriptions` | `POST /api/gateway/v1/audio/transcriptions` |
+| audio | `createTranslation` | `modelInvoke` | `sinecloud api call createTranslation` | `sinecloud gateway audio translations` | `POST /api/gateway/v1/audio/translations` |
+| chat | `createChatCompletion` | `modelInvoke` | `sinecloud api call createChatCompletion` | `sinecloud gateway chat completions` | `POST /api/gateway/v1/chat/completions` |
+| edits | `image.edit` | `modelInvoke` | `sinecloud api call image.edit` | `sinecloud gateway edits images` | `POST /api/gateway/v1/edits/images` |
+| embeddings | `createEmbedding` | `modelInvoke` | `sinecloud api call createEmbedding` | `sinecloud gateway embeddings create` | `POST /api/gateway/v1/embeddings` |
+| generations | `animation3d.generate` | `modelInvoke` | `sinecloud api call animation3d.generate` | `sinecloud gateway generations animations3d` | `POST /api/gateway/v1/generations/animations3d` |
+| generations | `audio.synthesize` | `modelInvoke` | `sinecloud api call audio.synthesize` | `sinecloud gateway generations audio` | `POST /api/gateway/v1/generations/audio` |
+| generations | `document.generate` | `modelInvoke` | `sinecloud api call document.generate` | `sinecloud gateway generations documents` | `POST /api/gateway/v1/generations/documents` |
+| generations | `image.generate` | `modelInvoke` | `sinecloud api call image.generate` | `sinecloud gateway generations images` | `POST /api/gateway/v1/generations/images` |
+| generations | `model3d.generate` | `modelInvoke` | `sinecloud api call model3d.generate` | `sinecloud gateway generations models3d` | `POST /api/gateway/v1/generations/models3d` |
+| generations | `music.generate` | `modelInvoke` | `sinecloud api call music.generate` | `sinecloud gateway generations music` | `POST /api/gateway/v1/generations/music` |
+| generations | `sound.generate` | `modelInvoke` | `sinecloud api call sound.generate` | `sinecloud gateway generations sounds` | `POST /api/gateway/v1/generations/sounds` |
+| generations | `splat.generate` | `modelInvoke` | `sinecloud api call splat.generate` | `sinecloud gateway generations splats` | `POST /api/gateway/v1/generations/splats` |
+| generations | `video.generate` | `modelInvoke` | `sinecloud api call video.generate` | `sinecloud gateway generations videos` | `POST /api/gateway/v1/generations/videos` |
+| images | `editImage` | `modelInvoke` | `sinecloud api call editImage` | `sinecloud gateway images edits` | `POST /api/gateway/v1/images/edits` |
+| images | `createImage` | `modelInvoke` | `sinecloud api call createImage` | `sinecloud gateway images generations` | `POST /api/gateway/v1/images/generations` |
+| messages | `createMessage` | `modelInvoke` | `sinecloud api call createMessage` | `sinecloud gateway messages create` | `POST /api/gateway/v1/messages` |
+| models | `listModels` | `modelRead` | `sinecloud api call listModels` | `sinecloud gateway models list` | `GET /api/gateway/v1/models` |
+| models3d | `model3d.remesh` | `modelInvoke` | `sinecloud api call model3d.remesh` | `sinecloud gateway models3d remesh` | `POST /api/gateway/v1/models3d/remesh` |
+| models3d | `model3d.retexture` | `modelInvoke` | `sinecloud api call model3d.retexture` | `sinecloud gateway models3d retexture` | `POST /api/gateway/v1/models3d/retexture` |
+| models3d | `model3d.rig` | `modelInvoke` | `sinecloud api call model3d.rig` | `sinecloud gateway models3d rig` | `POST /api/gateway/v1/models3d/rig` |
+| responses | `createModelResponse` | `modelInvoke` | `sinecloud api call createModelResponse` | `sinecloud gateway responses create` | `POST /api/gateway/v1/responses` |
+| tasks | `tasks.list` | `modelInvoke` | `sinecloud api call tasks.list` | `sinecloud gateway tasks list` | `GET /api/gateway/v1/tasks` |
+| tasks | `tasks.get` | `modelInvoke` | `sinecloud api call tasks.get` | `sinecloud gateway tasks get` | `GET /api/gateway/v1/tasks/{id}` |
+| tasks | `tasks.cancel` | `modelInvoke` | `sinecloud api call tasks.cancel` | `sinecloud gateway tasks cancel` | `POST /api/gateway/v1/tasks/{id}/cancel` |
 
 Total: 26 operations.

@@ -8,7 +8,7 @@
 
 **Acceptance**
 
-1. Verifies the `boxId` with `sinecloud box list` instead of trusting the prompt.
+1. Verifies the `boxId` with `api call boxListBoxes` instead of trusting the prompt.
 2. Reads the price endpoint and states whether this is Lite (wall-clock) or Sandbox (window).
 3. Generates a durable `executionId` and submits one command with a bounded `timeoutMs`.
 4. Reads that execution to a terminal state, then retrieves the failing output from the record.

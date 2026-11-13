@@ -20,10 +20,10 @@ Contract: `https://sinecloud.dev/api/openapi/powers.json`. Generated operations 
 4. **Cost** — read the quote. Platform execution charges the organization wallet; own-provider execution charges the provider account separately.
 
 ```bash
-sinecloud powers catalog list --json | head -40
-sinecloud powers endpoints list --json | jq '.data[] | {id, name, revision}'
-sinecloud powers endpoints get --endpoint-id "$ENDPOINT_ID" --json | jq '{input: .inputSchema, price, revision}'
-sinecloud powers endpoints quote --endpoint-id "$ENDPOINT_ID" --json
+sinecloud api list --product powers --json
+sinecloud api call powers_describeCatalog --json
+sinecloud api call powers_getEndpoint --param endpointId="$ENDPOINT_ID" --json
+sinecloud api call powers_getPlatformPowersQuote --param endpointId="$ENDPOINT_ID" --json
 ```
 
 ## Choose who pays
@@ -34,7 +34,7 @@ sinecloud powers endpoints quote --endpoint-id "$ENDPOINT_ID" --json
 | Own provider (BYOK) | Pass an organization-owned `connectionId` | Cloud fee can be zero; the provider bills the account |
 
 ```bash
-sinecloud powers connections list --json
+sinecloud api call powers_listConnections --json
 ```
 
 Connections are created and approved by an organization owner or admin in Console (**Advanced BYOK**). Never place provider credentials in a command line: `powers connections replace|update` reads them from stdin, not argv. A successful save does not prove the provider accepts the credentials.
@@ -49,7 +49,7 @@ cat > run.json <<'JSON'
 }
 JSON
 
-sinecloud powers runs create --yes --body @run.json --json
+sinecloud api call powers_createRun --yes --body @run.json --json
 ```
 
 - Prefer passing the quote back: `--quote quote.json` and, for platform prices, `--expected-price-version N`. A changed price returns `409` instead of a silent overcharge.
@@ -59,10 +59,10 @@ sinecloud powers runs create --yes --body @run.json --json
 ## Read the result
 
 ```bash
-sinecloud powers runs get --run-id "$RUN_ID" --json
-sinecloud powers runs list --json
-sinecloud powers usage-events list --json
+sinecloud api call powers_getRun --param runId="$RUN_ID" --json
 ```
+
+Listing runs and reading usage events use the same shape; their operation IDs are in [`references/operations.md`](references/operations.md).
 
 `ACCEPTED`, `RUNNING` and `UNKNOWN` are not success. Read the run record until it reaches a terminal status, and interpret the output by the endpoint's declared output schema — not by what a similarly named tool usually returns.
 
@@ -87,7 +87,7 @@ The run has a terminal record, the output matches the endpoint's declared schema
 
 ## References
 
-- [`references/operations.md`](references/operations.md) — operations, scopes, CLI commands, HTTP paths
+- [`references/operations.md`](references/operations.md) — operations, scopes, direct calls, convenience commands, HTTP paths
 - [`references/access.md`](references/access.md) — access paths, credential rules
 - [`references/costs.md`](references/costs.md) — platform vs provider billing, reservations, stop conditions
 - [`references/feedback.md`](references/feedback.md) — reporting wrong guidance

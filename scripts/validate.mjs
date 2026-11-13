@@ -137,16 +137,29 @@ if (!existsSync(bin)) {
         if (/^(?:--|-\w|@|\$|<|\{|["'`])/.test(word)) break
         words.push(word)
       }
+      const relative = path.relative(root, file)
+      const instructions = relative.startsWith(`skills${path.sep}`) && !relative.endsWith('operations.md')
       const candidate = words.join(' ')
       if (!candidate) continue
       if (candidate.startsWith('api call ')) {
         const operationId = words[2]
-        if (!operationId || !operationIds.has(operationId)) fail(`${path.relative(root, file)}: api call uses unknown operationId "${operationId}"`)
+        if (!operationId || !operationIds.has(operationId)) fail(`${relative}: api call uses unknown operationId "${operationId}"`)
         continue
       }
-      if (candidate.startsWith('api list') || candidate.startsWith('openapi get') || candidate.startsWith('auth ') || candidate === 'doctor' || candidate === 'completion') continue
+      if (candidate.startsWith('api list') || candidate.startsWith('auth ') || candidate === 'doctor' || candidate === 'completion') continue
+      if (candidate.startsWith('openapi get')) {
+        const product = words[2]
+        // A placeholder such as <agents|box|powers|gateway> is documentation, not an invocation.
+        if (product && !product.startsWith('<') && !products.includes(product) && product !== 'index') fail(`${relative}: openapi get expects a product or index, got "${product}"`)
+        continue
+      }
+      // Instructions must not restate per-operation commands: the generated table is the only list.
+      if (instructions) {
+        fail(`${relative}: uses the operation command "sinecloud ${candidate}"; write "api call <operationId>" and leave command names to references/operations.md`)
+        continue
+      }
       const matches = [...commands].some(known => known === candidate || candidate.startsWith(`${known} `))
-      if (!matches) fail(`${path.relative(root, file)}: unknown CLI command "sinecloud ${candidate}"`)
+      if (!matches) fail(`${relative}: unknown CLI command "sinecloud ${candidate}"`)
     }
   }
 }

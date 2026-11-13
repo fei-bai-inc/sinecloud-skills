@@ -52,10 +52,9 @@ An **organization API key** (`sc_…`) is the only credential a product API acce
 3. Verify before doing paid work:
 
 ```bash
-npx @sinecloud/cli@0.1.0 auth status --json     # after `auth login`; saved key is owner-only
-npx @sinecloud/cli@0.1.0 api list --product gateway --json | head
-curl -sS -H "Authorization: Bearer $SINECLOUD_API_KEY" \
-  https://sinecloud.dev/api/gateway/v1/models | head
+npx @sinecloud/cli@0.1.0 auth status --json                     # after `auth login`; saved key is owner-only
+npx @sinecloud/cli@0.1.0 api list --product gateway --json      # every operation for that product
+npx @sinecloud/cli@0.1.0 api call listModels --json             # one read-only call through the same key
 ```
 
 The CLI stores the device-login key itself; when a key already exists, prefer `SINECLOUD_API_KEY` over pasting anything into a command history.

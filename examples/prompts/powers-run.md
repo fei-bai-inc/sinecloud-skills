@@ -8,7 +8,7 @@
 
 **Acceptance**
 
-1. Searches the real catalog (`powers catalog list`, `powers endpoints list`) and shows endpoint IDs with their revision.
+1. Searches the real catalog (`api call powers_describeCatalog`, `powers_listEndpoints`) and shows endpoint IDs with their revision.
 2. Reads the endpoint's input schema and builds `input` from it, including string `pathParams` if used.
 3. Reads the quote, states the platform fee, and passes the expected price version when supported.
 4. Submits exactly one run with the exact endpoint ID and input; keeps the run ID.

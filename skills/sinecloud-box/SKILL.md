@@ -20,19 +20,19 @@ Contract: `https://sinecloud.dev/api/openapi/box.json`. Generated operations and
 4. **Balance and price** — read the price endpoint before starting a Sandbox window or submitting paid commands.
 
 ```bash
-sinecloud box list --json | jq '.data[] | {id, name, runtimeKind}'
-sinecloud box price list --box-id "$BOX_ID" --json
+sinecloud api list --product box --json
+sinecloud api call boxListBoxes --json
+sinecloud api call boxGetPrice --param boxId="$BOX_ID" --json
 ```
 
 ## Files
 
 ```bash
-sinecloud box workspace files list --box-id "$BOX_ID" --json
-sinecloud box workspace file list   --box-id "$BOX_ID" --path /workspace/notes.txt --json
-sinecloud box workspace file replace --box-id "$BOX_ID" --path /workspace/notes.txt --file ./notes.txt
-sinecloud box workspace file delete  --box-id "$BOX_ID" --path /workspace/notes.txt
-sinecloud box workspace stats list   --box-id "$BOX_ID" --json
+sinecloud api call boxReadWorkspaceFile --param boxId="$BOX_ID" --param path=/workspace/notes.txt --json
+sinecloud api call boxWriteWorkspaceFile --param boxId="$BOX_ID" --param path=/workspace/notes.txt --file ./notes.txt
 ```
+
+Listing, deleting and workspace stats follow the same shape; the operation IDs are in [`references/operations.md`](references/operations.md).
 
 - Paths are canonical `/workspace` paths; traversal, backslashes and control characters are rejected.
 - `--file` sends raw bytes. For Sandbox, a live window is required for live file access; reading a paused Sandbox does not wake it.
@@ -52,14 +52,12 @@ cat > execution.json <<'JSON'
 }
 JSON
 
-sinecloud box executions create --box-id "$BOX_ID" --yes --body @execution.json --wait --json
-sinecloud box executions get    --box-id "$BOX_ID" --execution-id "$EXECUTION_ID" --json
-sinecloud box executions cancel --box-id "$BOX_ID" --execution-id "$EXECUTION_ID" --yes
-sinecloud box executions list   --box-id "$BOX_ID" --json
+sinecloud api call boxSubmitExecution --param boxId="$BOX_ID" --yes --body @execution.json --wait --json
+sinecloud api call boxGetExecution --param boxId="$BOX_ID" --param executionId="$EXECUTION_ID" --json
 ```
 
 - Lite: `timeoutMs` maximum is 120000 ms. Sandbox: maximum 300000 ms and never beyond the remaining funded window.
-- `--wait` polls that same execution and never resubmits it. Without `--wait`, keep the `executionId` and read it later.
+- `--wait` polls that same execution and never resubmits it. Without `--wait`, keep the `executionId` and read it later; cancelling and listing use the same shape (see [`references/operations.md`](references/operations.md)).
 - Access to a history summary is not access to full output. Cancelling a dispatched command needs runtime confirmation; an unknown state means neither stopped nor refunded.
 
 ## Sandbox runtime windows
@@ -68,11 +66,11 @@ A window is funded for a duration (default 10 minutes, maximum 30) and billed fo
 
 ```bash
 echo '{"action":"start","leaseId":"lease-20261113-01","timeoutMs":600000}' > runtime.json
-sinecloud box runtime create --box-id "$BOX_ID" --yes --body @runtime.json --json
-sinecloud box runtime list   --box-id "$BOX_ID" --json
+sinecloud api call boxChangeRuntime --param boxId="$BOX_ID" --yes --body @runtime.json --json
+sinecloud api call boxGetRuntime --param boxId="$BOX_ID" --json
 
 echo '{"action":"extend","leaseId":"lease-20261113-01","timeoutMs":300000}' > extend.json
-sinecloud box runtime create --box-id "$BOX_ID" --yes --body @extend.json --json
+sinecloud api call boxChangeRuntime --param boxId="$BOX_ID" --yes --body @extend.json --json
 ```
 
 - Review the quote and available balance before start or extend; the estimate is not a locked price.
@@ -83,12 +81,11 @@ sinecloud box runtime create --box-id "$BOX_ID" --yes --body @extend.json --json
 ## Backups
 
 ```bash
-sinecloud box backups create --box-id "$BOX_ID" --yes --json
-sinecloud box backups list   --box-id "$BOX_ID" --json
-sinecloud box backups get    --box-id "$BOX_ID" --backup-id "$BACKUP_ID" --json
-sinecloud box backups files  --box-id "$BOX_ID" --backup-id "$BACKUP_ID" --json
-sinecloud box backups export --box-id "$BOX_ID" --backup-id "$BACKUP_ID" --output backup.tar
+sinecloud api call boxCreateBackup --param boxId="$BOX_ID" --yes --json
+sinecloud api call boxExportBackup --param boxId="$BOX_ID" --param backupId="$BACKUP_ID" --output backup.tar
 ```
+
+Listing, reading metadata and listing backup files use the same shape and are listed in [`references/operations.md`](references/operations.md).
 
 Creating a backup is paid and requires `boxRun`. Exporting writes a local archive; verify the file exists and its size is plausible before reporting success.
 
@@ -109,7 +106,7 @@ The execution or window has a confirmed terminal or active state read from the A
 
 ## References
 
-- [`references/operations.md`](references/operations.md) — operations, scopes, CLI commands, HTTP paths
+- [`references/operations.md`](references/operations.md) — operations, scopes, direct calls, convenience commands, HTTP paths
 - [`references/access.md`](references/access.md) — access paths, credential rules, exit codes
 - [`references/costs.md`](references/costs.md) — Lite vs Sandbox measurement, reservations, stop conditions
 - [`references/feedback.md`](references/feedback.md) — reporting wrong guidance

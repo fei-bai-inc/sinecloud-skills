@@ -3,29 +3,29 @@
 
 Authorities: [`https://sinecloud.dev/api/openapi/agents.json`](https://sinecloud.dev/api/openapi/agents.json) and `sinecloud api list --product agents --json`.
 Scopes in use: `agentRun`.
-The CLI inserts the selected workspace and resource IDs into the path; raw HTTP uses the published path below.
+Either call form works. The convenience command fills path values with named flags; `api call` takes `--param name=value`, and raw HTTP uses the published path. The CLI inserts the selected workspace and resource IDs.
 
-| Area | Operation | Scope | CLI | HTTP |
-| --- | --- | --- | --- | --- |
-| agents | `agents_get_v1_agents` | `agentRun` | `sinecloud agents list get` | `GET /api/agents/v1/agents` |
-| agents | `agents_post_v1_agents` | `agentRun` | `sinecloud agents create` | `POST /api/agents/v1/agents` |
-| agents | `agents_delete_v1_agents_agent_id` | `agentRun` | `sinecloud agents delete` | `DELETE /api/agents/v1/agents/{agent_id}` |
-| agents | `agents_get_v1_agents_agent_id` | `agentRun` | `sinecloud agents get` | `GET /api/agents/v1/agents/{agent_id}` |
-| agents | `agents_post_v1_agents_agent_id` | `agentRun` | `sinecloud agents update` | `POST /api/agents/v1/agents/{agent_id}` |
-| capabilities | `agents_get_sine_v1_capabilities` | `agentRun` | `sinecloud agents capabilities list` | `GET /api/agents/v1/capabilities` |
-| models | `agents_get_sine_v1_models` | `agentRun` | `sinecloud agents models list` | `GET /api/agents/v1/models` |
-| root | `agents_listInstances` | `agentRun` | `sinecloud agents list` | `GET /api/agents/v1` |
-| sessions | `agents_get_v1_agents_sessions` | `agentRun` | `sinecloud agents sessions list` | `GET /api/agents/v1/sessions` |
-| sessions | `agents_post_v1_agents_sessions` | `agentRun` | `sinecloud agents sessions create` | `POST /api/agents/v1/sessions` |
-| sessions | `agents_delete_v1_agents_sessions_session_id` | `agentRun` | `sinecloud agents sessions delete` | `DELETE /api/agents/v1/sessions/{session_id}` |
-| sessions | `agents_get_v1_agents_sessions_session_id` | `agentRun` | `sinecloud agents sessions get` | `GET /api/agents/v1/sessions/{session_id}` |
-| sessions | `agents_post_v1_agents_sessions_session_id` | `agentRun` | `sinecloud agents sessions update` | `POST /api/agents/v1/sessions/{session_id}` |
-| sessions | `agents_get_sine_v1_sessions_session_id_attempts` | `agentRun` | `sinecloud agents sessions attempts` | `GET /api/agents/v1/sessions/{session_id}/attempts` |
-| sessions | `agents_get_v1_agents_sessions_session_id_events` | `agentRun` | `sinecloud agents sessions events` | `GET /api/agents/v1/sessions/{session_id}/events` |
-| sessions | `agents_post_v1_agents_sessions_session_id_events` | `agentRun` | `sinecloud agents sessions events post` | `POST /api/agents/v1/sessions/{session_id}/events` |
-| sessions | `agents_get_v1_agents_sessions_session_id_items` | `agentRun` | `sinecloud agents sessions items` | `GET /api/agents/v1/sessions/{session_id}/items` |
-| sessions | `agents_get_v1_agents_sessions_session_id_turns` | `agentRun` | `sinecloud agents sessions turns` | `GET /api/agents/v1/sessions/{session_id}/turns` |
-| sessions | `agents_get_v1_agents_sessions_session_id_turns_turn_id` | `agentRun` | `sinecloud agents sessions turns get` | `GET /api/agents/v1/sessions/{session_id}/turns/{turn_id}` |
-| sessions | `agents_get_sine_v1_sessions_session_id_usage` | `agentRun` | `sinecloud agents sessions usage` | `GET /api/agents/v1/sessions/{session_id}/usage` |
+| Area | Operation | Scope | Direct call | Convenience command | HTTP |
+| --- | --- | --- | --- | --- | --- |
+| agents | `agents_get_v1_agents` | `agentRun` | `sinecloud api call agents_get_v1_agents` | `sinecloud agents list get` | `GET /api/agents/v1/agents` |
+| agents | `agents_post_v1_agents` | `agentRun` | `sinecloud api call agents_post_v1_agents` | `sinecloud agents create` | `POST /api/agents/v1/agents` |
+| agents | `agents_delete_v1_agents_agent_id` | `agentRun` | `sinecloud api call agents_delete_v1_agents_agent_id` | `sinecloud agents delete` | `DELETE /api/agents/v1/agents/{agent_id}` |
+| agents | `agents_get_v1_agents_agent_id` | `agentRun` | `sinecloud api call agents_get_v1_agents_agent_id` | `sinecloud agents get` | `GET /api/agents/v1/agents/{agent_id}` |
+| agents | `agents_post_v1_agents_agent_id` | `agentRun` | `sinecloud api call agents_post_v1_agents_agent_id` | `sinecloud agents update` | `POST /api/agents/v1/agents/{agent_id}` |
+| capabilities | `agents_get_sine_v1_capabilities` | `agentRun` | `sinecloud api call agents_get_sine_v1_capabilities` | `sinecloud agents capabilities list` | `GET /api/agents/v1/capabilities` |
+| models | `agents_get_sine_v1_models` | `agentRun` | `sinecloud api call agents_get_sine_v1_models` | `sinecloud agents models list` | `GET /api/agents/v1/models` |
+| root | `agents_listInstances` | `agentRun` | `sinecloud api call agents_listInstances` | `sinecloud agents list` | `GET /api/agents/v1` |
+| sessions | `agents_get_v1_agents_sessions` | `agentRun` | `sinecloud api call agents_get_v1_agents_sessions` | `sinecloud agents sessions list` | `GET /api/agents/v1/sessions` |
+| sessions | `agents_post_v1_agents_sessions` | `agentRun` | `sinecloud api call agents_post_v1_agents_sessions` | `sinecloud agents sessions create` | `POST /api/agents/v1/sessions` |
+| sessions | `agents_delete_v1_agents_sessions_session_id` | `agentRun` | `sinecloud api call agents_delete_v1_agents_sessions_session_id` | `sinecloud agents sessions delete` | `DELETE /api/agents/v1/sessions/{session_id}` |
+| sessions | `agents_get_v1_agents_sessions_session_id` | `agentRun` | `sinecloud api call agents_get_v1_agents_sessions_session_id` | `sinecloud agents sessions get` | `GET /api/agents/v1/sessions/{session_id}` |
+| sessions | `agents_post_v1_agents_sessions_session_id` | `agentRun` | `sinecloud api call agents_post_v1_agents_sessions_session_id` | `sinecloud agents sessions update` | `POST /api/agents/v1/sessions/{session_id}` |
+| sessions | `agents_get_sine_v1_sessions_session_id_attempts` | `agentRun` | `sinecloud api call agents_get_sine_v1_sessions_session_id_attempts` | `sinecloud agents sessions attempts` | `GET /api/agents/v1/sessions/{session_id}/attempts` |
+| sessions | `agents_get_v1_agents_sessions_session_id_events` | `agentRun` | `sinecloud api call agents_get_v1_agents_sessions_session_id_events` | `sinecloud agents sessions events` | `GET /api/agents/v1/sessions/{session_id}/events` |
+| sessions | `agents_post_v1_agents_sessions_session_id_events` | `agentRun` | `sinecloud api call agents_post_v1_agents_sessions_session_id_events` | `sinecloud agents sessions events post` | `POST /api/agents/v1/sessions/{session_id}/events` |
+| sessions | `agents_get_v1_agents_sessions_session_id_items` | `agentRun` | `sinecloud api call agents_get_v1_agents_sessions_session_id_items` | `sinecloud agents sessions items` | `GET /api/agents/v1/sessions/{session_id}/items` |
+| sessions | `agents_get_v1_agents_sessions_session_id_turns` | `agentRun` | `sinecloud api call agents_get_v1_agents_sessions_session_id_turns` | `sinecloud agents sessions turns` | `GET /api/agents/v1/sessions/{session_id}/turns` |
+| sessions | `agents_get_v1_agents_sessions_session_id_turns_turn_id` | `agentRun` | `sinecloud api call agents_get_v1_agents_sessions_session_id_turns_turn_id` | `sinecloud agents sessions turns get` | `GET /api/agents/v1/sessions/{session_id}/turns/{turn_id}` |
+| sessions | `agents_get_sine_v1_sessions_session_id_usage` | `agentRun` | `sinecloud api call agents_get_sine_v1_sessions_session_id_usage` | `sinecloud agents sessions usage` | `GET /api/agents/v1/sessions/{session_id}/usage` |
 
 Total: 20 operations.

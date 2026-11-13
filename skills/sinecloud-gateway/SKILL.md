@@ -20,7 +20,8 @@ Contract: `https://sinecloud.dev/api/openapi/gateway.json`. Generated operations
 4. **Managed vs BYOK** — managed routes bill the organization wallet at published prices; BYOK routes have zero Cloud invocation fee but bill the provider account.
 
 ```bash
-sinecloud gateway models list --json | jq '.data[] | {id, owned_by}'
+sinecloud api list --product gateway --json
+sinecloud api call listModels --json | jq '.data[] | {id, owned_by}'
 ```
 
 ## Call a model
@@ -32,7 +33,7 @@ cat > chat.json <<'JSON'
   "stream": false }
 JSON
 
-sinecloud gateway chat completions --body @chat.json --json
+sinecloud api call createChatCompletion --body @chat.json --json
 ```
 
 - Other surfaces: `gateway responses create`, `gateway messages create`, `gateway embeddings create`, `gateway audio speech|transcriptions|translations`, `gateway images generations|edits`, `gateway audio speech`.
@@ -44,11 +45,11 @@ sinecloud gateway chat completions --body @chat.json --json
 Media and 3D operations accept a submission and return a task identity instead of a finished artifact.
 
 ```bash
-sinecloud gateway generations images --body @image.json --json      # returns a task id
-sinecloud gateway tasks list --json
-sinecloud gateway tasks get --id "$TASK_ID" --json
-sinecloud gateway tasks cancel --id "$TASK_ID" --yes
+sinecloud api call image.generate --body @image.json --json      # returns a task id
+sinecloud api call tasks.get --param id="$TASK_ID" --json
 ```
+
+Listing and cancelling tasks use the same shape (`tasks.list`, `tasks.cancel`); see [`references/operations.md`](references/operations.md).
 
 - Poll the task with `tasks get`; do not resubmit the generation to check status.
 - A fixed-price asynchronous task is charged when the provider accepts the submission. Later failure or cancellation does not automatically refund that fee.
@@ -77,7 +78,7 @@ The model or task returned the real output the contract declares, the usage or c
 
 ## References
 
-- [`references/operations.md`](references/operations.md) — operations, scopes, CLI commands, HTTP paths
+- [`references/operations.md`](references/operations.md) — operations, scopes, direct calls, convenience commands, HTTP paths
 - [`references/access.md`](references/access.md) — access paths, credential rules
 - [`references/costs.md`](references/costs.md) — token vs fixed pricing, reservations, media settlement
 - [`references/feedback.md`](references/feedback.md) — reporting wrong guidance

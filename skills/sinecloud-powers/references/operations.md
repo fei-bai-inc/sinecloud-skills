@@ -3,29 +3,29 @@
 
 Authorities: [`https://sinecloud.dev/api/openapi/powers.json`](https://sinecloud.dev/api/openapi/powers.json) and `sinecloud api list --product powers --json`.
 Scopes in use: `catalogRead`, `connectionRead`, `connectionWrite`, `runRead`, `toolRun`, `usageRead`.
-The CLI inserts the selected workspace and resource IDs into the path; raw HTTP uses the published path below.
+Either call form works. The convenience command fills path values with named flags; `api call` takes `--param name=value`, and raw HTTP uses the published path. The CLI inserts the selected workspace and resource IDs.
 
-| Area | Operation | Scope | CLI | HTTP |
-| --- | --- | --- | --- | --- |
-| catalog | `powers_describeCatalog` | `catalogRead` | `sinecloud powers catalog list` | `GET /api/powers/v1/catalog` |
-| categories | `powers_listCategories` | `catalogRead` | `sinecloud powers categories list` | `GET /api/powers/v1/categories` |
-| connection-providers | `powers_listConnectionProviders` | `connectionRead` | `sinecloud powers connection-providers list` | `GET /api/powers/v1/connection-providers` |
-| connection-providers | `powers_getConnectionProvider` | `connectionRead` | `sinecloud powers connection-providers get` | `GET /api/powers/v1/connection-providers/{providerId}` |
-| connection-providers | `powers_getConnectionProfile` | `connectionRead` | `sinecloud powers connection-providers profiles get` | `GET /api/powers/v1/connection-providers/{providerId}/profiles/{authProfileId}` |
-| connections | `powers_listConnections` | `connectionRead` | `sinecloud powers connections list` | `GET /api/powers/v1/connections` |
-| connections | `powers_patchConnection` | `connectionWrite` | `sinecloud powers connections update` | `PATCH /api/powers/v1/connections/{connectionId}` |
-| connections | `powers_putConnection` | `connectionWrite` | `sinecloud powers connections replace` | `PUT /api/powers/v1/connections/{connectionId}` |
-| endpoint-bindings | `powers_listEndpointBindings` | `catalogRead` | `sinecloud powers endpoint-bindings list` | `GET /api/powers/v1/endpoint-bindings` |
-| endpoint-bindings | `powers_getEndpointBinding` | `catalogRead` | `sinecloud powers endpoint-bindings get` | `GET /api/powers/v1/endpoint-bindings/{bindingId}` |
-| endpoints | `powers_listEndpoints` | `catalogRead` | `sinecloud powers endpoints list` | `GET /api/powers/v1/endpoints` |
-| endpoints | `powers_getEndpoint` | `catalogRead` | `sinecloud powers endpoints get` | `GET /api/powers/v1/endpoints/{endpointId}` |
-| endpoints | `powers_getPlatformPowersQuote` | `catalogRead` | `sinecloud powers endpoints quote` | `GET /api/powers/v1/endpoints/{endpointId}/quote` |
-| host | `powers_describeHost` | `catalogRead` | `sinecloud powers host list` | `GET /api/powers/v1/host` |
-| providers | `powers_listProviders` | `catalogRead` | `sinecloud powers providers list` | `GET /api/powers/v1/providers` |
-| runs | `powers_listRuns` | `runRead` | `sinecloud powers runs list` | `GET /api/powers/v1/runs` |
-| runs | `powers_createRun` | `toolRun` | `sinecloud powers runs create` | `POST /api/powers/v1/runs` |
-| runs | `powers_getRun` | `runRead` | `sinecloud powers runs get` | `GET /api/powers/v1/runs/{runId}` |
-| services | `powers_listServices` | `catalogRead` | `sinecloud powers services list` | `GET /api/powers/v1/services` |
-| usage-events | `powers_listUsageEvents` | `usageRead` | `sinecloud powers usage-events list` | `GET /api/powers/v1/usage-events` |
+| Area | Operation | Scope | Direct call | Convenience command | HTTP |
+| --- | --- | --- | --- | --- | --- |
+| catalog | `powers_describeCatalog` | `catalogRead` | `sinecloud api call powers_describeCatalog` | `sinecloud powers catalog list` | `GET /api/powers/v1/catalog` |
+| categories | `powers_listCategories` | `catalogRead` | `sinecloud api call powers_listCategories` | `sinecloud powers categories list` | `GET /api/powers/v1/categories` |
+| connection-providers | `powers_listConnectionProviders` | `connectionRead` | `sinecloud api call powers_listConnectionProviders` | `sinecloud powers connection-providers list` | `GET /api/powers/v1/connection-providers` |
+| connection-providers | `powers_getConnectionProvider` | `connectionRead` | `sinecloud api call powers_getConnectionProvider` | `sinecloud powers connection-providers get` | `GET /api/powers/v1/connection-providers/{providerId}` |
+| connection-providers | `powers_getConnectionProfile` | `connectionRead` | `sinecloud api call powers_getConnectionProfile` | `sinecloud powers connection-providers profiles get` | `GET /api/powers/v1/connection-providers/{providerId}/profiles/{authProfileId}` |
+| connections | `powers_listConnections` | `connectionRead` | `sinecloud api call powers_listConnections` | `sinecloud powers connections list` | `GET /api/powers/v1/connections` |
+| connections | `powers_patchConnection` | `connectionWrite` | `sinecloud api call powers_patchConnection` | `sinecloud powers connections update` | `PATCH /api/powers/v1/connections/{connectionId}` |
+| connections | `powers_putConnection` | `connectionWrite` | `sinecloud api call powers_putConnection` | `sinecloud powers connections replace` | `PUT /api/powers/v1/connections/{connectionId}` |
+| endpoint-bindings | `powers_listEndpointBindings` | `catalogRead` | `sinecloud api call powers_listEndpointBindings` | `sinecloud powers endpoint-bindings list` | `GET /api/powers/v1/endpoint-bindings` |
+| endpoint-bindings | `powers_getEndpointBinding` | `catalogRead` | `sinecloud api call powers_getEndpointBinding` | `sinecloud powers endpoint-bindings get` | `GET /api/powers/v1/endpoint-bindings/{bindingId}` |
+| endpoints | `powers_listEndpoints` | `catalogRead` | `sinecloud api call powers_listEndpoints` | `sinecloud powers endpoints list` | `GET /api/powers/v1/endpoints` |
+| endpoints | `powers_getEndpoint` | `catalogRead` | `sinecloud api call powers_getEndpoint` | `sinecloud powers endpoints get` | `GET /api/powers/v1/endpoints/{endpointId}` |
+| endpoints | `powers_getPlatformPowersQuote` | `catalogRead` | `sinecloud api call powers_getPlatformPowersQuote` | `sinecloud powers endpoints quote` | `GET /api/powers/v1/endpoints/{endpointId}/quote` |
+| host | `powers_describeHost` | `catalogRead` | `sinecloud api call powers_describeHost` | `sinecloud powers host list` | `GET /api/powers/v1/host` |
+| providers | `powers_listProviders` | `catalogRead` | `sinecloud api call powers_listProviders` | `sinecloud powers providers list` | `GET /api/powers/v1/providers` |
+| runs | `powers_listRuns` | `runRead` | `sinecloud api call powers_listRuns` | `sinecloud powers runs list` | `GET /api/powers/v1/runs` |
+| runs | `powers_createRun` | `toolRun` | `sinecloud api call powers_createRun` | `sinecloud powers runs create` | `POST /api/powers/v1/runs` |
+| runs | `powers_getRun` | `runRead` | `sinecloud api call powers_getRun` | `sinecloud powers runs get` | `GET /api/powers/v1/runs/{runId}` |
+| services | `powers_listServices` | `catalogRead` | `sinecloud api call powers_listServices` | `sinecloud powers services list` | `GET /api/powers/v1/services` |
+| usage-events | `powers_listUsageEvents` | `usageRead` | `sinecloud api call powers_listUsageEvents` | `sinecloud powers usage-events list` | `GET /api/powers/v1/usage-events` |
 
 Total: 20 operations.
