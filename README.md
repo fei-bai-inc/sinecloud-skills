@@ -2,7 +2,7 @@
 
 Official Agent Skills for [Sine Cloud](https://sinecloud.dev): Agents, Box, Powers and Gateway.
 
-Each Skill teaches an agent one capability a user actually wants — run an agent session, use a cloud box, call a tool, or reach a model — instead of one connection method. MCP, the SDK, the CLI, raw HTTP and the Console are five ways to reach the same published API; they are described once in `references/access.md` inside each Skill, never as separate Skills.
+Each Skill teaches an agent one capability a user actually wants: run an agent session, use a cloud box, call a tool, or reach a model.
 
 ## Install
 
@@ -40,7 +40,6 @@ Requirements: Node.js 24.19+ for `@sinecloud/cli`, an organization API key with 
 
 ## How these Skills are built
 
-- **Capability, not transport.** `sinecloud-mcp`, `sinecloud-sdk`, `sinecloud-cli` and `sinecloud-api` are deliberately absent; their content lives in every Skill's `references/access.md`.
 - **Contract first.** An Agent discovers real operations with `sinecloud api list`, calls one with `sinecloud api call <operationId>`, reads the published OpenAPI in `references/operations.md`, and never invents an ID, field, scope or status.
 - **One command surface.** Instructions use only meta commands (`auth`, `api list`, `api call <operationId>`, `openapi get`, `doctor`). Per-operation command names exist exactly once, in the generated table; the validator fails a Skill that restates one.
 - **Costs stated up front.** Every Skill says what is reserved, what is settled, and which action needs a quote or a budget.

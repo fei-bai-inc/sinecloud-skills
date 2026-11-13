@@ -2,7 +2,7 @@
 
 面向 [Sine Cloud](https://sinecloud.dev) 的官方 Agent Skills：Agents、Box、Powers、Gateway。
 
-每个 Skill 教 agent 完成一件用户真正要做的事——跑一次 agent 会话、用云端 Box、调一个工具、调用模型——而不是按连接方式拆分。MCP、SDK、CLI、原生 HTTP 与 Console 只是同一套公开 API 的五种入口，统一写在每个 Skill 的 `references/access.md` 里，不再单独成 Skill。
+每个 Skill 教 agent 完成一件用户真正要做的事：跑一次 agent 会话、用云端 Box、调一个工具、调用模型。
 
 ## 安装
 
@@ -40,7 +40,6 @@ Claude Code 插件市场：
 
 ## 设计原则
 
-- **按能力切分，不按传输方式。** 没有 `sinecloud-mcp` / `sinecloud-sdk` / `sinecloud-cli` / `sinecloud-api`；这些内容在 `references/access.md`。
 - **契约优先。** 用 `sinecloud api list` 发现真实操作，从生成的 `references/operations.md` 读 operationId、路径与 scope；不猜 ID、字段、错误码。
 - **先讲成本。** 每个 Skill 说明什么被预留、什么已结算、哪一步需要报价或预算。
 - **先恢复再重试。** 结果未知时保留原请求身份，按 Skill 指定的记录回查，而不是重新提交。
