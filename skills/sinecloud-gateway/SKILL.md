@@ -20,7 +20,7 @@ Contract: `https://sinecloud.dev/api/openapi/gateway.json`. Generated operations
 4. **Managed vs BYOK** — managed routes bill the organization wallet at published prices; BYOK routes have zero Cloud invocation fee but bill the provider account.
 
 ```bash
-sinecloud gateway models list --json | jq '.data[] | {id, streaming, tools}'
+sinecloud gateway models list --json | jq '.data[] | {id, owned_by}'
 ```
 
 ## Call a model

@@ -20,11 +20,11 @@ The contract is `https://sinecloud.dev/api/openapi/agents.json`; the generated o
 4. **Balance** — model calls consume organization credits. Read [`references/costs.md`](references/costs.md).
 
 ```bash
-sinecloud agents list --json | jq '.data[] | {id, name}'
-sinecloud agents models list --instance-id "$INSTANCE_ID" --json | jq '.data[] | {id, streaming, tools}'
+sinecloud agents list --json | jq '.data[] | {id, status}'
+sinecloud agents models list --instance-id "$INSTANCE_ID" --json
 ```
 
-Read `sinecloud api list --product agents --json` when a flag is unclear; it is the authoritative command and parameter surface.
+Read the field names the catalog actually returns; do not assume a `streaming` or `tools` property. Pick a model that supports streaming text, and one with confirmed tool support when the Agent uses tools. `sinecloud api list --product agents --json` is the authoritative command and parameter surface when a flag is unclear.
 
 ## Run a turn
 
