@@ -1,0 +1,29 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "sinecloud",
+  "description": "Official Sine Cloud Agent Skills for Agents, Box, Powers and Gateway.",
+  "metadata": {
+    "description": "Official Sine Cloud Agent Skills for Agents, Box, Powers and Gateway."
+  },
+  "owner": {
+    "name": "Feibai Intelligence",
+    "email": "support@sinecloud.dev",
+    "url": "https://sinecloud.dev"
+  },
+  "plugins": [
+    {
+      "name": "sinecloud",
+      "source": "./",
+      "description": "Run Sine Cloud capabilities from an agent: choose a product, prepare least-privilege access, then use Agents, Box, Powers or Gateway.",
+      "author": {
+        "name": "Feibai Intelligence",
+        "email": "support@sinecloud.dev",
+        "url": "https://sinecloud.dev"
+      },
+      "homepage": "https://docs.sinecloud.dev/",
+      "repository": "https://github.com/fei-bai-inc/sinecloud-skills",
+      "license": "MIT",
+      "keywords": ["sinecloud", "agents", "box", "powers", "gateway", "mcp", "sdk", "cli"]
+    }
+  ]
+}

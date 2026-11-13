@@ -1,0 +1,13 @@
+{
+  "name": "sinecloud",
+  "description": "Run Sine Cloud capabilities from an agent: choose a product, prepare least-privilege access, then use Agents, Box, Powers or Gateway.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Feibai Intelligence",
+    "email": "support@sinecloud.dev",
+    "url": "https://sinecloud.dev"
+  },
+  "homepage": "https://docs.sinecloud.dev/",
+  "repository": "https://github.com/fei-bai-inc/sinecloud-skills",
+  "license": "MIT"
+}

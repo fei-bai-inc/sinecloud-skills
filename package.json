@@ -1,0 +1,19 @@
+{
+  "name": "@sinecloud/skills",
+  "private": true,
+  "type": "module",
+  "description": "Official Sine Cloud Agent Skills",
+  "engines": {
+    "node": ">=24.19.0"
+  },
+  "scripts": {
+    "sync": "node scripts/sync-shared.mjs",
+    "sync:check": "node scripts/sync-shared.mjs --check",
+    "generate": "node scripts/generate-operations.mjs",
+    "generate:check": "node scripts/generate-operations.mjs --check",
+    "validate": "node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "@sinecloud/cli": "0.1.0"
+  }
+}
